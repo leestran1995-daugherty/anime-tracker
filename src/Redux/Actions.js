@@ -9,7 +9,7 @@ export const modifyEpisodesWatched = (newNum, index) => ({
   showIndex: index
 })
 
-export const initStorage = (shows) => ({
-  type: 'INIT_STORAGE',
-  shows: shows
+export const deleteShow = (index) => ({
+  type: 'DELETE_SHOW',
+  index: index
 })

@@ -28,14 +28,21 @@ const SearchModal = ({ setShowModal }) => {
             />
           </div>
           <div className="control">
-            <button className="button is-info" href="#" alt="search button" onClick={() => searchText()}>
+            <button
+              className="button is-info"
+              href="#"
+              alt="search button"
+              onClick={() => searchText()}
+            >
               Search
             </button>
           </div>
         </div>
-        <div className="box">
-          <SearchResults results={results} />
-        </div>
+        {results && (
+          <div className="box">
+            <SearchResults results={results} />
+          </div>
+        )}
       </div>
       <button
         className="modal-close is-large"

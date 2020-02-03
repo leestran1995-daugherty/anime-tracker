@@ -1,11 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {modifyEpisodesWatched} from "./Redux/Actions";
+import { modifyEpisodesWatched, deleteShow } from "./Redux/Actions";
+import ContentEditable from "react-contenteditable";
 
 const ShowCard = ({ showData, index }) => {
   const dispatch = useDispatch();
 
-  const episodesWatched = useSelector(state => state[index].episodesWatched) || 0;
+  const episodesWatched =
+    useSelector(state => state[index].episodesWatched) || 0;
 
   const changeEpisodesWatched = (newNum, index) => {
     dispatch(modifyEpisodesWatched(newNum, index));
@@ -23,7 +25,7 @@ const ShowCard = ({ showData, index }) => {
           </p>
         </figure>
         <div className="media-content">
-          <strong>{showData.attributes.titles.en} </strong>
+          <strong>{showData.attributes.titles.en ? showData.attributes.titles.en : showData.attributes.titles.en_jp} </strong>
           <small>
             (
             {showData.attributes.startDate &&
@@ -32,10 +34,23 @@ const ShowCard = ({ showData, index }) => {
           </small>
           <br />
           <p className="showDesc">{showData.attributes.synopsis}</p>
-          <span>{episodesWatched}/</span>
+          <span contenteditable>{episodesWatched}/</span>
           <span>{showData.attributes.episodeCount} </span>
-          <button className="button is-info is-small" onClick={() => changeEpisodesWatched(episodesWatched + 1, index)}>+</button>
-          <button className="button has-text-info is-small" onClick={() => changeEpisodesWatched(episodesWatched -1, index)}>-</button>
+          <button
+            className="button is-info is-small"
+            onClick={() => changeEpisodesWatched(episodesWatched + 1, index)}
+          >
+            +
+          </button>
+          <button
+            className="button has-text-info is-small"
+            onClick={() => changeEpisodesWatched(episodesWatched - 1, index)}
+          >
+            -
+          </button>
+          <button className="button is-danger is-small is-pulled-right" onClick={() => dispatch(deleteShow(index))}>
+            x
+          </button>
         </div>
       </article>
     </div>

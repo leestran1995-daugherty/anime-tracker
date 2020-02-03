@@ -21,7 +21,7 @@ const SearchCard = props => {
           </p>
         </figure>
         <div className="media-content">
-          <strong>{props.data.attributes.titles.en} </strong>
+          <strong>{props.data.attributes.titles.en ? props.data.attributes.titles.en : props.data.attributes.titles.en_jp} </strong>
           <small>
             (
             {props.data.attributes.startDate &&

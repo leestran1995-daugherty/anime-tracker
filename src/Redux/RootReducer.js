@@ -12,8 +12,9 @@
         var tempState = state;
         tempState[action.showIndex].episodesWatched = action.newAmount;
         return tempState;
-      case 'INIT_STORAGE':
-        return action.shows;
+      case 'DELETE_SHOW':
+        state.splice(action.index, 1);
+        return state;
       default:
         return state;
     }
