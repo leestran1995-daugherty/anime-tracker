@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="App container">
-      <button className="button" onClick={() => setShowModal(true)}>Search</button>
+      <button className="button is-link is-rounded searchButton" onClick={() => setShowModal(true)}>Search</button>
       {shows && shows.map((show, index) => <ShowCard showData={show.showData} index={index} />)}
 
       {/* Modal */}
