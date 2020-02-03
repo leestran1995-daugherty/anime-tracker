@@ -9,12 +9,13 @@
           }
         ]
       case 'MODIFY_EPISODES_WATCHED':
-        var tempState = state;
+        var tempState = [...state];
         tempState[action.showIndex].episodesWatched = action.newAmount;
         return tempState;
       case 'DELETE_SHOW':
-        state.splice(action.index, 1);
-        return state;
+        var tempState = [...state]
+        tempState.splice(action.index, 1);
+        return tempState;
       default:
         return state;
     }

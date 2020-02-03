@@ -1,13 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { modifyEpisodesWatched, deleteShow } from "./Redux/Actions";
-import ContentEditable from "react-contenteditable";
 
 const ShowCard = ({ showData, index }) => {
   const dispatch = useDispatch();
 
   const episodesWatched =
-    useSelector(state => state[index].episodesWatched) || 0;
+    useSelector(state => state[index] && state[index].episodesWatched) || 0;
 
   const changeEpisodesWatched = (newNum, index) => {
     dispatch(modifyEpisodesWatched(newNum, index));
@@ -38,7 +37,7 @@ const ShowCard = ({ showData, index }) => {
           </small>
           <br />
           <p className="showDesc">{showData.attributes.synopsis}</p>
-          <span contenteditable>{episodesWatched}/</span>
+          <span>{episodesWatched}/</span>
           <span>{showData.attributes.episodeCount} </span>
           <button
             className="button is-info is-small"

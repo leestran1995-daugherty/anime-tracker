@@ -9,8 +9,6 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const shows = useSelector(state => state);
 
-  useSelector(state => state.map(show => show.episodesWatched));
-
   useEffect(() => {
     return () => {
       const serializedState = JSON.stringify(shows)

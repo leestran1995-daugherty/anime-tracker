@@ -1,6 +1,6 @@
 .showDesc {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: scroll;
+  overflow-x: hidden;
   height: 200px;
   margin-bottom: 10px;
 }
