@@ -38,7 +38,7 @@ const SearchModal = ({ setShowModal }) => {
             </button>
           </div>
         </div>
-        {results && (
+        {results.data && (
           <div className="box">
             <SearchResults results={results} />
           </div>
