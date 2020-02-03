@@ -25,7 +25,11 @@ const ShowCard = ({ showData, index }) => {
           </p>
         </figure>
         <div className="media-content">
-          <strong>{showData.attributes.titles.en ? showData.attributes.titles.en : showData.attributes.titles.en_jp} </strong>
+          <strong>
+            {showData.attributes.titles.en
+              ? showData.attributes.titles.en
+              : showData.attributes.titles.en_jp}{" "}
+          </strong>
           <small>
             (
             {showData.attributes.startDate &&
@@ -38,17 +42,26 @@ const ShowCard = ({ showData, index }) => {
           <span>{showData.attributes.episodeCount} </span>
           <button
             className="button is-info is-small"
-            onClick={() => changeEpisodesWatched(episodesWatched + 1, index)}
+            onClick={() => {
+              if (episodesWatched < showData.attributes.episodeCount)
+                changeEpisodesWatched(episodesWatched + 1, index);
+            }}
           >
             +
           </button>
           <button
             className="button has-text-info is-small"
-            onClick={() => changeEpisodesWatched(episodesWatched - 1, index)}
+            onClick={() => {
+              if (episodesWatched > 0)
+                changeEpisodesWatched(episodesWatched - 1, index);
+            }}
           >
             -
           </button>
-          <button className="button is-danger is-small is-pulled-right" onClick={() => dispatch(deleteShow(index))}>
+          <button
+            className="button is-danger is-small is-pulled-right"
+            onClick={() => dispatch(deleteShow(index))}
+          >
             x
           </button>
         </div>
