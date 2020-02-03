@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import bulma from "bulma";
+import SearchModal from "./Search/SearchModal"
+import { useSelector } from "react-redux"
+import ShowCard from "./ShowCard"
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+  const shows = useSelector(state => state);
+
+  useSelector(state => state.map(show => show.episodesWatched));
+
+  useEffect(() => {
+    return () => {
+      const serializedState = JSON.stringify(shows)
+      localStorage.setItem("shows", serializedState)
+    }
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App container">
+      <button className="button" onClick={() => setShowModal(true)}>Search</button>
+      {shows && shows.map((show, index) => <ShowCard showData={show.showData} index={index} />)}
+
+      {/* Modal */}
+      {showModal && <SearchModal setShowModal={setShowModal}/>}
     </div>
   );
 }
