@@ -38,3 +38,13 @@
   max-height: 40px;
   border-radius: 50%;
 }
+
+.watchedButtons {
+  margin-top: 6px;
+}
+
+.watchedText {
+  font-size: 22px;
+  vertical-align: top;
+  margin-top: 10px;
+}

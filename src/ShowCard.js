@@ -38,10 +38,12 @@ const ShowCard = ({ showData, index }) => {
           </small>
           <br />
           <p className="showDesc">{showData.attributes.synopsis}</p>
-          <span>{episodesWatched}/</span>
-          <span>{showData.attributes.episodeCount} </span>
+          <span className="watchedText">{episodesWatched}/</span>
+          <span className="watchedText">
+            {showData.attributes.episodeCount}{" "}
+          </span>
           <button
-            className="button is-info is-small"
+            className="button is-info is-small watchedButtons"
             onClick={() => {
               if (episodesWatched < showData.attributes.episodeCount)
                 changeEpisodesWatched(episodesWatched + 1, index);
@@ -50,7 +52,7 @@ const ShowCard = ({ showData, index }) => {
             +
           </button>
           <button
-            className="button has-text-info is-small"
+            className="button has-text-info is-small watchedButtons"
             onClick={() => {
               if (episodesWatched > 0)
                 changeEpisodesWatched(episodesWatched - 1, index);
@@ -59,8 +61,11 @@ const ShowCard = ({ showData, index }) => {
             -
           </button>
           <div className="streamingIconsContainer">
-            {showData.streamingInfo.data.map((site) => (
-              <StreamingIcon key={site.attributes.url} url={site.attributes.url} />
+            {showData.streamingInfo.data.map(site => (
+              <StreamingIcon
+                key={site.attributes.url}
+                url={site.attributes.url}
+              />
             ))}
           </div>
           <button
