@@ -23,3 +23,18 @@
   margin-left: 15px;
   margin-top: 15px;
 }
+
+.streamingIconContainer {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.streamingIconsContainer {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.streamingIconImage {
+  max-height: 40px;
+  border-radius: 50%;
+}

@@ -6,7 +6,15 @@ const SearchCard = props => {
   const dispatch = useDispatch();
 
   const saveShow = () => {
-    dispatch(addShow(props.data));
+    let data = props.data;
+    fetch(
+      props.data.relationships.streamingLinks.links.related
+    )
+      .then(response => response.json())
+      .then(r => {
+        data.streamingInfo = r;
+        dispatch(addShow(data));
+      });
   };
 
   return (
@@ -21,7 +29,11 @@ const SearchCard = props => {
           </p>
         </figure>
         <div className="media-content">
-          <strong>{props.data.attributes.titles.en ? props.data.attributes.titles.en : props.data.attributes.titles.en_jp} </strong>
+          <strong>
+            {props.data.attributes.titles.en
+              ? props.data.attributes.titles.en
+              : props.data.attributes.titles.en_jp}{" "}
+          </strong>
           <small>
             (
             {props.data.attributes.startDate &&

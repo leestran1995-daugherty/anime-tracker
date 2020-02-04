@@ -1,8 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { modifyEpisodesWatched, deleteShow } from "./Redux/Actions";
+import StreamingIcon from "./StreamingIcon";
 
 const ShowCard = ({ showData, index }) => {
+  console.log(showData);
   const dispatch = useDispatch();
 
   const episodesWatched =
@@ -57,6 +59,11 @@ const ShowCard = ({ showData, index }) => {
           >
             -
           </button>
+          <div className="streamingIconsContainer">
+            {showData.streamingInfo.data.map(site => (
+              <StreamingIcon url={site.attributes.url} />
+            ))}
+          </div>
           <button
             className="button is-danger is-small is-pulled-right"
             onClick={() => dispatch(deleteShow(index))}

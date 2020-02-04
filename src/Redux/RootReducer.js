@@ -2,6 +2,7 @@
     switch (action.type) {
       case 'ADD_SHOW':
         action.showData.episodesWatched = 0;
+        console.log(action);
         return [
           ...state,
           {
