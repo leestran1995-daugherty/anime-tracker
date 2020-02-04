@@ -4,7 +4,6 @@ import { modifyEpisodesWatched, deleteShow } from "./Redux/Actions";
 import StreamingIcon from "./StreamingIcon";
 
 const ShowCard = ({ showData, index }) => {
-  console.log(showData);
   const dispatch = useDispatch();
 
   const episodesWatched =
@@ -60,8 +59,8 @@ const ShowCard = ({ showData, index }) => {
             -
           </button>
           <div className="streamingIconsContainer">
-            {showData.streamingInfo.data.map(site => (
-              <StreamingIcon url={site.attributes.url} />
+            {showData.streamingInfo.data.map((site) => (
+              <StreamingIcon key={site.attributes.url} url={site.attributes.url} />
             ))}
           </div>
           <button
