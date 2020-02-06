@@ -12,7 +12,7 @@
 }
 
 .showCardContainer {
-  max-height:400px;
+  max-height:300px;
   min-height: 200px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -37,6 +37,7 @@
 .streamingIconImage {
   max-height: 40px;
   border-radius: 50%;
+  box-shadow: 0 0 1px 0 black inset, 0 0 1px 0 black;
 }
 
 .watchedButtons {
@@ -47,4 +48,9 @@
   font-size: 22px;
   vertical-align: top;
   margin-top: 10px;
+}
+
+.episodesWatchedContainer {
+  display: inline;
+  margin-right: 5px;
 }

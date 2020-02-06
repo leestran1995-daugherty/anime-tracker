@@ -13,3 +13,8 @@ export const deleteShow = (index) => ({
   type: 'DELETE_SHOW',
   index: index
 })
+
+export const loadShows = (showData) => ({
+  type: 'LOAD_SHOWS',
+  showData: showData
+})

@@ -38,14 +38,16 @@ const ShowCard = ({ showData, index }) => {
           </small>
           <br />
           <p className="showDesc">{showData.attributes.synopsis}</p>
-          <span className="watchedText">{episodesWatched}/</span>
-          <span className="watchedText">
-            {showData.attributes.episodeCount}{" "}
-          </span>
+          <div className="episodesWatchedContainer">
+            <span className="watchedText">{episodesWatched}/</span>
+            <span className="watchedText">
+              {showData.attributes.episodeCount}
+            </span>
+          </div>
           <button
             className="button is-info is-small watchedButtons"
             onClick={() => {
-              if (episodesWatched < showData.attributes.episodeCount)
+              if (episodesWatched < (showData.attributes.episodeCount || 99999))
                 changeEpisodesWatched(episodesWatched + 1, index);
             }}
           >
