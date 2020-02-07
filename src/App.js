@@ -6,15 +6,16 @@ import { useSelector } from "react-redux";
 import ShowCard from "./ShowCard";
 import { useDispatch } from "react-redux";
 import { loadShows, addToken, clearStore } from "./Redux/Actions";
+import Login from "./Login";
+import {API_ROOT} from "./Constants"
+import ApiButtons from "./ApiButtons"
 
-const apiRoot = "http://localhost:3003/api";
 const queryString = require("query-string");
 
 const App = () => {
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
-  const [username, setUsername] = useState("");
   const shows = useSelector(state => state.shows);
   const state = useSelector(state => state);
 
@@ -28,21 +29,8 @@ const App = () => {
     };
   }, [state]);
 
-  const handleSave = () => {
-    const data = { username: username, data: JSON.stringify(shows) };
-    fetch(
-      `${apiRoot}/update?token=${state.token.access_token}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      }
-    )
-      .catch(err => console.log(err));
-  };
-
   const handleLoad = () => {
-    fetch(`${apiRoot}/getForToken/${state.token.access_token}`)
+    fetch(`${API_ROOT}/getForToken/${state.token.access_token}`)
       .then(res => res.json())
       .then(data => dispatch(loadShows(data)))
       .catch(err => console.log(err));
@@ -51,7 +39,7 @@ const App = () => {
   const params = queryString.parse(window.location.search);
   if (params.code && !state.token) {
     console.log("Getting a token");
-    fetch(`${apiRoot}/getToken?code=${params.code}`, {
+    fetch(`${API_ROOT}/getToken?code=${params.code}`, {
       method: "GET"
     })
       .then(res => res.json())
@@ -60,10 +48,14 @@ const App = () => {
   }
 
   useEffect(() => {
-    if(state.token) {
+    if (state.token) {
       handleLoad();
     }
-  }, [state.token])
+  }, [state.token]);
+
+  if (!state.token) {
+    return <Login />;
+  }
 
   return (
     <div className="App container">
@@ -73,25 +65,8 @@ const App = () => {
       >
         Search
       </button>
-      <input
-        className="input"
-        type="text"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
-      <button className="button" onClick={() => handleSave()}>
-        Save
-      </button>
-      <button className="button" onClick={() => handleLoad()}>
-        Load data
-      </button>
-      <a
-        className="button"
-        href="https://discordapp.com/api/oauth2/authorize?client_id=675021562692239380&redirect_uri=http%3A%2F%2Flocalhost%3A3000&response_type=code&scope=identify"
-      >
-        Login
-      </a>
-      <button className="button" onClick={() => dispatch(clearStore())}>Logout</button>
+      <br/>
+      <ApiButtons handleLoad={handleLoad} />
       {shows &&
         shows.map((show, index) => (
           <ShowCard

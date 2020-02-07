@@ -6,21 +6,24 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducer from "./Redux/RootReducer.js";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 let store;
 
 const serializedState = localStorage.getItem("shows");
 
-if(serializedState) {
-  store = createStore(reducer,JSON.parse(serializedState))
+if (serializedState) {
+  store = createStore(reducer, JSON.parse(serializedState));
 } else {
   store = createStore(reducer);
 }
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Router>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Router>,
   document.getElementById("root")
 );
 

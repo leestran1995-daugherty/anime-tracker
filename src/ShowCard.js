@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { modifyEpisodesWatched, deleteShow } from "./Redux/Actions";
-import StreamingIcon from "./StreamingIcon";
+import StreamingIcon from "./StreamingIcons/StreamingIcon";
 
 const ShowCard = ({ showData, index }) => {
   const dispatch = useDispatch();
 
   const episodesWatched =
-    useSelector(state => state[index] && state[index].episodesWatched) || 0;
+    useSelector(state => state.shows[index] && state.shows[index].episodesWatched) || 0;
 
   const changeEpisodesWatched = (newNum, index) => {
     dispatch(modifyEpisodesWatched(newNum, index));
