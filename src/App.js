@@ -30,21 +30,18 @@ const App = () => {
 
   const handleSave = () => {
     const data = { username: username, data: JSON.stringify(shows) };
-    // TODO: Declare backend url in a config file
     fetch(
-      `${apiRoot}/update?token=` + state.token.access_token,
+      `${apiRoot}/update?token=${state.token.access_token}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       }
     )
-      .then(res => console.log(res))
       .catch(err => console.log(err));
   };
 
   const handleLoad = () => {
-    // TODO: Declare backend url in a config file
     fetch(`${apiRoot}/getForToken/${state.token.access_token}`)
       .then(res => res.json())
       .then(data => dispatch(loadShows(data)))
@@ -53,6 +50,7 @@ const App = () => {
 
   const params = queryString.parse(window.location.search);
   if (params.code && !state.token) {
+    console.log("Getting a token");
     fetch(`${apiRoot}/getToken?code=${params.code}`, {
       method: "GET"
     })
