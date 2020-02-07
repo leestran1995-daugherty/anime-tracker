@@ -7,8 +7,8 @@ import ShowCard from "./ShowCard";
 import { useDispatch } from "react-redux";
 import { loadShows, addToken, clearStore } from "./Redux/Actions";
 import Login from "./Login";
-import {API_ROOT} from "./Constants"
-import ApiButtons from "./ApiButtons"
+import { API_ROOT } from "./Constants";
+import ApiButtons from "./ApiButtons";
 
 const queryString = require("query-string");
 
@@ -16,18 +16,20 @@ const App = () => {
   const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
+  const [stateChangedFlag, setStateChangedFlag] = useState(false);
+
   const shows = useSelector(state => state.shows);
   const state = useSelector(state => state);
 
-  useEffect(() => {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem("shows", serializedState);
+  // useEffect(() => {
+  //   const serializedState = JSON.stringify(state);
+  //   localStorage.setItem("shows", serializedState);
 
-    return () => {
-      const serializedState = JSON.stringify(state);
-      localStorage.setItem("shows", serializedState);
-    };
-  }, [state]);
+  //   return () => {
+  //     const serializedState = JSON.stringify(state);
+  //     localStorage.setItem("shows", serializedState);
+  //   };
+  // }, [state]);
 
   const handleLoad = () => {
     fetch(`${API_ROOT}/getForToken/${state.token.access_token}`)
@@ -53,6 +55,10 @@ const App = () => {
     }
   }, [state.token]);
 
+  useEffect(() => {
+    setStateChangedFlag(true);
+  }, [state]);
+
   if (!state.token) {
     return <Login />;
   }
@@ -65,8 +71,12 @@ const App = () => {
       >
         Search
       </button>
-      <br/>
-      <ApiButtons handleLoad={handleLoad} />
+      <br />
+      <ApiButtons
+        handleLoad={handleLoad}
+        stateChangedFlag={stateChangedFlag}
+        setStateChangedFlag={setStateChangedFlag}
+      />
       {shows &&
         shows.map((show, index) => (
           <ShowCard
