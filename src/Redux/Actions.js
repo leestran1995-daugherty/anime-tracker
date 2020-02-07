@@ -18,3 +18,12 @@ export const loadShows = (showData) => ({
   type: 'LOAD_SHOWS',
   showData: showData
 })
+
+export const addToken = (token) => ({
+  type: 'ADD_TOKEN',
+  token: token
+})
+
+export const clearStore = () => ({
+  type: 'CLEAR_STORE'
+})
