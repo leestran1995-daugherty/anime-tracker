@@ -1,5 +1,3 @@
-import { act } from "react-dom/test-utils";
-
 const reducer = (state = { token: null, shows: [] }, action) => {
   var tempState = {...state};
   switch (action.type) {

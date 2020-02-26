@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { API_ROOT } from "./Constants";
 import {clearStore} from "./Redux/Actions"
 
-const ApiButtons = ({handleLoad, stateChangedFlag, setStateChangedFlag}) => {
+const ApiButtons = ({handleLoad, stateChangedFlag, setStateChangedFlag, firstTime}) => {
   const shows = useSelector(state => state.shows);
   const token = useSelector(state => state.token);
   const dispatch = useDispatch();
-  console.log(stateChangedFlag);
 
   const handleSave = () => {
     const data = { username: "", data: JSON.stringify(shows) };
@@ -21,7 +20,7 @@ const ApiButtons = ({handleLoad, stateChangedFlag, setStateChangedFlag}) => {
 
   return (
     <div className="apiButtons">
-      {stateChangedFlag && <button className="button is-success" onClick={() => handleSave()}>
+      {stateChangedFlag && !firstTime && <button className="button is-success" onClick={() => handleSave()}>
         Save
       </button>}
       <button className="button" onClick={() => handleLoad()}>

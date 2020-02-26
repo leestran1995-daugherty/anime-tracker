@@ -1,93 +1,29 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import bulma from "bulma";
-import SearchModal from "./Search/SearchModal";
-import { useSelector } from "react-redux";
-import ShowCard from "./ShowCard";
-import { useDispatch } from "react-redux";
-import { loadShows, addToken, clearStore } from "./Redux/Actions";
+import React from "react";
+import Main from "./Main";
 import Login from "./Login";
-import { API_ROOT } from "./Constants";
-import ApiButtons from "./ApiButtons";
-
-const queryString = require("query-string");
+import AuthCallback from "./AuthCallback"
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import AuthedRoute from "./Routes/AuthedRoute";
+import bulma from "bulma"
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  const [showModal, setShowModal] = useState(false);
-  const [stateChangedFlag, setStateChangedFlag] = useState(false);
-
-  const shows = useSelector(state => state.shows);
-  const state = useSelector(state => state);
-
-  // useEffect(() => {
-  //   const serializedState = JSON.stringify(state);
-  //   localStorage.setItem("shows", serializedState);
-
-  //   return () => {
-  //     const serializedState = JSON.stringify(state);
-  //     localStorage.setItem("shows", serializedState);
-  //   };
-  // }, [state]);
-
-  const handleLoad = () => {
-    fetch(`${API_ROOT}/getForToken/${state.token.access_token}`)
-      .then(res => res.json())
-      .then(data => dispatch(loadShows(data)))
-      .catch(err => console.log(err));
-  };
-
-  const params = queryString.parse(window.location.search);
-  if (params.code && !state.token) {
-    console.log("Getting a token");
-    fetch(`${API_ROOT}/getToken?code=${params.code}`, {
-      method: "GET"
-    })
-      .then(res => res.json())
-      .then(token => dispatch(addToken(token)))
-      .catch(err => console.log(err));
-  }
-
-  useEffect(() => {
-    if (state.token) {
-      handleLoad();
-    }
-  }, [state.token]);
-
-  useEffect(() => {
-    setStateChangedFlag(true);
-  }, [state]);
-
-  if (!state.token) {
-    return <Login />;
-  }
-
   return (
-    <div className="App container">
-      <button
-        className="button is-link is-rounded searchButton"
-        onClick={() => setShowModal(true)}
-      >
-        Search
-      </button>
-      <br />
-      <ApiButtons
-        handleLoad={handleLoad}
-        stateChangedFlag={stateChangedFlag}
-        setStateChangedFlag={setStateChangedFlag}
-      />
-      {shows &&
-        shows.map((show, index) => (
-          <ShowCard
-            key={show.showData}
-            showData={show.showData}
-            index={index}
-          />
-        ))}
-      {/* Modal */}
-      {showModal && <SearchModal setShowModal={setShowModal} />}
-    </div>
+    <Router>
+      <Switch>
+        <AuthedRoute path="/main">
+          <Main />
+        </AuthedRoute>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/authcallback">
+          <AuthCallback />
+        </Route>
+        <Route path="/">
+          <Login />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
